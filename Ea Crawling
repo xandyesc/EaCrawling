@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EA Crawling - XAUUSD</title>
+
+<style>
+:root {
+  --bg: #0b0f14;
+  --card: #121822;
+  --accent: #f5c26b;
+  --text: #e6e9ef;
+  --muted: #9aa4b2;
+  --danger: #ff5c5c;
+  --success: #4ade80;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at top, #101826, var(--bg));
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+  animation: fadeIn 1s ease;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.card {
+  background: linear-gradient(180deg, #141c2a, var(--card));
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 0.8s ease forwards;
+}
+
+.card:nth-child(even) {
+  animation-delay: 0.1s;
+}
+
+.card h2 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+.highlight {
+  background: rgba(245,194,107,0.1);
+  border-left: 4px solid var(--accent);
+  padding: 14px;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+.rule {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  font-family: monospace;
+  color: #cbd5f5;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin: 4px 6px 0 0;
+}
+
+.sell { background: rgba(255,92,92,0.15); color: var(--danger); }
+.buy { background: rgba(74,222,128,0.15); color: var(--success); }
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 50px;
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🔑 EA Breakout XAUUSD</h1>
+  <p class="subtitle">Estratégia automática direcional focada em movimentos fortes</p>
+
+  <div class="card">
+    <h2>📌 A Estratégia</h2>
+    <p>
+      Este EA é uma <strong>estratégia automática de breakout direcional com ordens pendentes</strong>,
+      exclusiva para <strong>XAUUSD</strong>, focada em:
+    </p>
+    <ul>
+      <li>Explodir movimentos fortes (impulsos)</li>
+      <li>Evitar chop / lateralização</li>
+      <li>Gestão agressiva porém controlada, com trailing e proteção de lucro</li>
+    </ul>
+    <p>
+      Não é grid, não é martingale e <strong>não entra a mercado</strong>.<br>
+      Ele <strong>espera o preço provar direção</strong>.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Conceito Central</h2>
+    <div class="highlight">
+      “Se o mercado está se expandindo além do range e confirma direção,
+      eu entro no rompimento com stop controlado.”
+    </div>
+    <ul>
+      <li>Expansão de range</li>
+      <li>Filtro direcional por média</li>
+      <li>Breakout com ordem STOP</li>
+      <li>Trailing Stop automático</li>
+      <li>Filtro de horário</li>
+      <li>Proteção de lucro total da conta</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📊 Como a Direção é Definida</h2>
+    <p>
+      O EA utiliza uma <strong>média móvel curta</strong> aplicada em:
+    </p>
+    <ul>
+      <li>PRICE_LOW</li>
+      <li>PRICE_HIGH</li>
+    </ul>
+    <p>Isso cria um <strong>canal dinâmico micro-direcional</strong>.</p>
+
+    <span class="badge sell">🔻 SELL → preço abaixo da MA inferior</span>
+    <span class="badge buy">🔺 BUY → preço acima da MA superior</span>
+
+    <p style="margin-top:15px;">
+      <strong>Obs:</strong> A direção só é válida se houver expansão real.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📈 Filtro de Expansão (Anti-Chop)</h2>
+    <p>Antes de qualquer trade, o EA exige:</p>
+
+    <div class="rule">
+      High - Low do candle atual &gt; 140 pontos
+    </div>
+
+    <p>Se o candle não expandiu, o EA não faz nada.</p>
+
+    <ul>
+      <li>Mercado lateral</li>
+      <li>Micro ruído</li>
+      <li>Fake breakouts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>📐 Gestão de Lote</h2>
+    <p><strong>Modo automático (padrão):</strong></p>
+
+    <div class="rule">
+      Lote = AccountBalance / 10000
+    </div>
+
+    <ul>
+      <li>$1.000 → 0.10</li>
+      <li>$500 → 0.05</li>
+      <li>$100 → 0.01</li>
+    </ul>
+
+    <p>
+      ✔ Escala naturalmente<br>
+      ❌ Pode ficar agressivo em contas grandes
+    </p>
+
+    <p>Também permite <strong>lote fixo</strong>, se desejar.</p>
+  </div>
+
+  <div class="card">
+    <h2>💰 Recomendações Importantes</h2>
+    <ul>
+      <li>Use o template fornecido</li>
+      <li>Confira se sua corretora usa XAUUSD com 1 dígito extra</li>
+      <li>Mantenha sempre no <strong>Timeframe M30</strong></li>
+      <li>Teste antes de alterar o horário operacional padrão</li>
+      <li>Tenha sempre uma <strong>meta predefinida</strong></li>
+    </ul>
+  </div>
+
+<div class="footer">
+  EA desenvolvido para traders que buscam <strong>qualidade, direção e controle</strong>.<br><br>
+  <a href="https://www.instagram.com/xandyesc" target="_blank" style="color: #f5c26b; text-decoration: none; font-weight: 600;">
+    @xandyesc
+  </a>
+</div>
+
+</body>
+</html>
